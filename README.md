@@ -75,6 +75,10 @@ GOOGLE_DOC_ID=your_google_doc_id
     - Share your target Google Doc with the service account email (like a normal user) with Editor access.
 - Save the JSON key and update GOOGLE_CREDENTIALS_FILE path in .env.
 
+```
+Important 🚨: After created the service account. Add the service account email to google doc access share list as "Editor".
+```
+
 ## Running the Script
 ```bash
 python script.py

@@ -3,3 +3,5 @@ google-auth
 google-generativeai
 requests
 python-dotenv
+inquirer
+yaspin
