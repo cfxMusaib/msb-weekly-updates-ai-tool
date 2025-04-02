@@ -29,8 +29,8 @@ This Python script automates the generation of a **weekly engineering status rep
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/weekly-commit-docs.git
-cd weekly-commit-docs
+git clone https://github.com/cfxMusaib/msb-weekly-updates-ai-tool.git
+cd msb-weekly-updates-ai-tool
 
 # Install dependencies
 pip install -r requirements.txt
