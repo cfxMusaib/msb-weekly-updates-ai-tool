@@ -81,10 +81,10 @@ Important 🚨: After created the service account. Add the service account email
 
 ## Running the Script
 ```bash
-python script.py
+python3 script.py
 ```
 
-## 📅 Schedule It (Optional)
+## 📅 Schedule It (Optional) (Work under progress Available soon)
 To run it weekly, you can set up a cron job:
 ```bash
 0 9 * * MON /usr/bin/python3 /path/to/main.py >> /path/to/weekly_log.txt 2>&1
