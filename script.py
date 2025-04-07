@@ -19,6 +19,7 @@ WORKSPACE = os.getenv("WORKSPACE")
 REPO_SLUG = os.getenv("REPO_SLUG")
 GOOGLE_CREDENTIALS_SERVICE_ACCOUNT_FILE = os.getenv("GOOGLE_CREDENTIALS_SERVICE_ACCOUNT_FILE")
 GOOGLE_DOC_ID = os.getenv("GOOGLE_DOC_ID")
+print("GOOGLE_DOC_ID", GOOGLE_DOC_ID)
 
 genai.configure(api_key=GEMINI_API_KEY)
 gemini_model = genai.GenerativeModel("gemini-2.0-flash")
@@ -88,6 +89,8 @@ def get_structured_update_from_gemini(commits):
         1. Tasks completed 100%
         2. Tasks continue to work on
         3. New tasks started
+
+        Note: Feel free to elaborate the commit messages if needed but don't club the tasks together.
 
         Format the output like:
         <completed>
