@@ -63,6 +63,11 @@ def get_commits(from_date=None, to_date=None):
                 continue
 
             message = commit["message"].strip()
+
+             # Skip merge commits
+            if re.match(r'(?i)^merge\b', message):
+                continue
+
             hash_id = commit["hash"]
             commit_url = f"https://bitbucket.org/{WORKSPACE}/{REPO_SLUG}/commits/{hash_id}"
             date_only = commit_date.strftime("%Y-%m-%d")
