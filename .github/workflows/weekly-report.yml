@@ -58,4 +58,4 @@ jobs:
         run: |
           # Run the script for the previous week in table format.
           # You can change 'table' to 'bullet' if you prefer.
-          python report_generator_cli.py --range last-week --format table
+          python script-cli-arg.py --range last-week --format table
