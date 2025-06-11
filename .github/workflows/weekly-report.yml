@@ -38,9 +38,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-non-interactive-cli.txt
 
-      # 4. Create the Google Credentials file from the secret
+      # 4. Create the Google Credentials file from the secret (Robust Method)
       - name: Create Google Credentials File
-        run: echo "${{ secrets.GOOGLE_CREDENTIALS_SERVICE_ACCOUNT_FILE }}" > service-account.json
+        env:
+          # Pass the secret into an environment variable for this step
+          CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_SERVICE_ACCOUNT_FILE }}
+        run: |
+          # Echo the content of the variable into the file. The quotes are important.
+          echo "$CREDENTIALS_JSON" > service-account.json
       
       # 5. Run the Python script to generate the report
       - name: Run Weekly Report Generator
