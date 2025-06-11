@@ -14,6 +14,7 @@ load_dotenv()
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 BITBUCKET_USERNAME = os.getenv("BITBUCKET_USERNAME")
+BITBUCKET_EMAIL = os.getenv("BITBUCKET_EMAIL")
 BITBUCKET_APP_PASSWORD = os.getenv("BITBUCKET_APP_PASSWORD")
 WORKSPACE = os.getenv("WORKSPACE")
 REPO_SLUG = os.getenv("REPO_SLUG")
@@ -33,8 +34,8 @@ def get_commits(from_date=None, to_date=None):
         return [], None, None
 
     commits = []
-    allowed_emails = ["musaib.ali@cloudfabrix.com"]
-    allowed_usernames = ["mdmusaibali"]
+    allowed_emails = [BITBUCKET_EMAIL]
+    allowed_usernames = [BITBUCKET_USERNAME]
 
     while url:
         response = requests.get(url, auth=auth)

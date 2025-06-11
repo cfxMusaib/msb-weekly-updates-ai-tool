@@ -1,0 +1,61 @@
+# Name for your GitHub Actions workflow
+name: Generate Weekly Status Report
+
+# Controls when the action will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # Runs on a schedule
+  schedule:
+    # This is a cron job that runs at 08:00 UTC every Monday.
+    # Minute Hour Day-of-month Month Day-of-week
+    # You can adjust the time as needed.
+    - cron: '* * * * *'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "generate-report"
+  generate-report:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # 1. Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      # 2. Sets up the Python environment
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 3. Installs the required Python packages
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-non-interactive-cli.txt
+
+      # 4. Create the Google Credentials file from the secret
+      - name: Create Google Credentials File
+        run: echo "${{ secrets.GOOGLE_CREDENTIALS_SERVICE_ACCOUNT_FILE }}" > service-account.json
+      
+      # 5. Run the Python script to generate the report
+      - name: Run Weekly Report Generator
+        env:
+          # Map the GitHub Secrets to the environment variables your script expects
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
+          BITBUCKET_EMAIL: ${{ secrets.BITBUCKET_EMAIL }}
+          BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
+          WORKSPACE: ${{ secrets.WORKSPACE }}
+          REPO_SLUG: ${{ secrets.REPO_SLUG }}
+          GOOGLE_DOC_ID: ${{ secrets.GOOGLE_DOC_ID }}
+          # Point to the temporary credentials file created in the previous step
+          GOOGLE_CREDENTIALS_SERVICE_ACCOUNT_FILE: service-account.json
+        run: |
+          # Run the script for the previous week in table format.
+          # You can change 'table' to 'bullet' if you prefer.
+          python report_generator_cli.py --range last-week --format table
