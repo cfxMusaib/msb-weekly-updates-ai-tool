@@ -8,10 +8,8 @@ on:
 
   # Runs on a schedule
   schedule:
-    # This is a cron job that runs at 2:30 AM UTC every Monday (8:00 AM IST).
-    # Minute Hour Day-of-month Month Day-of-week
-    # You can adjust the time as needed.
-    - cron: '30 2 * * 1'
+    # Runs at 6:20 PM UTC every Saturday (11:50 PM IST)
+    - cron: '20 18 * * 6'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
