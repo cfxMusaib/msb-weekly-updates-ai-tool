@@ -8,8 +8,8 @@ on:
 
   # Runs on a schedule
   schedule:
-    # Runs at 6:20 PM UTC every Saturday (11:50 PM IST)
-    - cron: '20 18 * * 6'
+    # Runs at 5PM IST (Below cron exp is for UTC equivalent)
+    - cron: '30 11 * * 5'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
