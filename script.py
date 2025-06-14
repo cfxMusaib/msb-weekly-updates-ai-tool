@@ -376,7 +376,7 @@ def main():
     )
     parser.add_argument(
         "--range",
-        choices=["this-week", "last-week"],
+        choices=["this-week", "last-week", "fri-fri"],
         help="Pre-defined date range. Overrides --from-date and --to-date.",
     )
     parser.add_argument(
@@ -418,6 +418,16 @@ def main():
             to_date = from_date + timedelta(
                 days=6, hours=23, minutes=59, seconds=59
             )
+        elif args.range == "fri-fri":
+            # Get most recent Friday (this week's Friday or today if Friday)
+            weekday = today.weekday()  # Monday=0, Sunday=6
+            days_since_friday = (weekday - 4) % 7  # Friday=4
+            this_friday = (today - timedelta(days=days_since_friday)).replace(
+                hour=23, minute=59, second=59, microsecond=0
+            )
+            last_friday = this_friday - timedelta(days=7)
+            from_date = last_friday.replace(hour=0, minute=0, second=0, microsecond=0)
+            to_date = this_friday
     elif args.from_date and args.to_date:
         try:
             from_date = datetime.strptime(args.from_date, "%Y-%m-%d").replace(

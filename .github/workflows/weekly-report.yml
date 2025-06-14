@@ -61,4 +61,4 @@ jobs:
         run: |
           # Run the script for the previous week in table format.
           # You can change 'table' to 'bullet' if you prefer.
-          python script.py --range this-week --format table
+          python script.py --range fri-fri --format table
