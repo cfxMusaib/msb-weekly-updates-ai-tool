@@ -16,7 +16,7 @@ load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 BITBUCKET_USERNAME = os.getenv("BITBUCKET_USERNAME")
 BITBUCKET_EMAIL = os.getenv("BITBUCKET_EMAIL")
-BITBUCKET_APP_PASSWORD = os.getenv("BITBUCKET_APP_PASSWORD")
+BITBUCKET_API_TOKEN = os.getenv("BITBUCKET_API_TOKEN")
 WORKSPACE = os.getenv("WORKSPACE")
 REPO_SLUG = os.getenv("REPO_SLUG")
 GOOGLE_CREDENTIALS_SERVICE_ACCOUNT_FILE = os.getenv(
@@ -41,7 +41,24 @@ def get_commits(from_date=None, to_date=None):
         tuple: A tuple containing the list of commits, the start date, and the end date.
     """
     url = f"https://api.bitbucket.org/2.0/repositories/{WORKSPACE}/{REPO_SLUG}/commits"
-    auth = (BITBUCKET_USERNAME, BITBUCKET_APP_PASSWORD)
+    # For API tokens, use email instead of username
+    auth = (BITBUCKET_EMAIL, BITBUCKET_API_TOKEN)
+    
+    # Debug: Print URL and auth info (without exposing the token)
+    print(f"API URL: {url}")
+    print(f"Using email: {BITBUCKET_EMAIL}")
+    print(f"Token length: {len(BITBUCKET_API_TOKEN) if BITBUCKET_API_TOKEN else 'None'}")
+    print(f"Workspace: {WORKSPACE}")
+    print(f"Repo slug: {REPO_SLUG}")
+    
+    # Test basic authentication with a simple API call first
+    test_url = f"https://api.bitbucket.org/2.0/repositories/{WORKSPACE}/{REPO_SLUG}"
+    print(f"Testing authentication with: {test_url}")
+    test_response = requests.get(test_url, auth=auth)
+    print(f"Test response status: {test_response.status_code}")
+    if test_response.status_code != 200:
+        print(f"Test response error: {test_response.text}")
+        return [], None, None
 
     if not from_date or not to_date:
         return [], None, None
@@ -54,6 +71,11 @@ def get_commits(from_date=None, to_date=None):
         response = requests.get(url, auth=auth)
         if response.status_code != 200:
             print(f"Bitbucket error: {response.status_code} {response.text}")
+            if response.status_code == 401:
+                print("Authentication failed. Please check:")
+                print("1. Your BITBUCKET_EMAIL is your Atlassian account email")
+                print("2. Your BITBUCKET_API_TOKEN is correct and has proper scopes")
+                print("3. Your WORKSPACE and REPO_SLUG are correct")
             break
 
         data = response.json()

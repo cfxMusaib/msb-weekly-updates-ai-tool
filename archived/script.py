@@ -15,7 +15,7 @@ load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 BITBUCKET_USERNAME = os.getenv("BITBUCKET_USERNAME")
 BITBUCKET_EMAIL = os.getenv("BITBUCKET_EMAIL")
-BITBUCKET_APP_PASSWORD = os.getenv("BITBUCKET_APP_PASSWORD")
+BITBUCKET_API_TOKEN = os.getenv("BITBUCKET_API_TOKEN")
 WORKSPACE = os.getenv("WORKSPACE")
 REPO_SLUG = os.getenv("REPO_SLUG")
 GOOGLE_CREDENTIALS_SERVICE_ACCOUNT_FILE = os.getenv("GOOGLE_CREDENTIALS_SERVICE_ACCOUNT_FILE")
@@ -28,7 +28,8 @@ gemini_model = genai.GenerativeModel("gemini-2.0-flash")
 
 def get_commits(from_date=None, to_date=None):
     url = f"https://api.bitbucket.org/2.0/repositories/{WORKSPACE}/{REPO_SLUG}/commits"
-    auth = (BITBUCKET_USERNAME, BITBUCKET_APP_PASSWORD)
+    # For API tokens, use email instead of username
+    auth = (BITBUCKET_EMAIL, BITBUCKET_API_TOKEN)
 
     if not from_date or not to_date:
         return [], None, None

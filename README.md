@@ -34,14 +34,16 @@ You'll need the following keys and IDs. It's recommended to gather them all befo
       - Go to [Google AI Studio's API Key page](https://aistudio.google.com/app/apikey).
       - Click `Create API Key` and copy the generated key.
 
-2.  **Bitbucket App Password**
+2.  **Bitbucket API Token**
 
-      - Navigate to your Bitbucket [App passwords settings](https://bitbucket.org/account/settings/app-passwords/).
-      - Click `Create app password`, give it a descriptive name (e.g., `report-bot`).
-      - Grant it these two permissions:
+      - Navigate to your [Atlassian account settings](https://id.atlassian.com/manage-profile/security/api-tokens).
+      - Click `Create API token with scopes`, give it a descriptive name (e.g., `report-bot`).
+      - Set an expiry date (optional but recommended for security).
+      - Select **Bitbucket** as the app.
+      - Grant it these permissions:
           - `repositories` \> `Read`
           - `account` \> `Read`
-      - Copy the generated password immediately. **You will not see it again.**
+      - Copy the generated token immediately. **You will not see it again.**
 
 3.  **Google Service Account & Doc ID**
 
@@ -60,9 +62,9 @@ In your GitHub repository, go to `Settings` \> `Secrets and variables` \> `Actio
 | Secret Name                             | Value                                                              |
 | --------------------------------------- | ------------------------------------------------------------------ |
 | `GEMINI_API_KEY`                        | Your key from Google AI Studio.                                    |
-| `BITBUCKET_USERNAME`                    | Your Bitbucket username.                                           |
-| `BITBUCKET_EMAIL`                       | Your Bitbucket account email.                                      |
-| `BITBUCKET_APP_PASSWORD`                | Your Bitbucket app password.                                       |
+| `BITBUCKET_USERNAME`                    | Your Bitbucket username (used for filtering commits).               |
+| `BITBUCKET_EMAIL`                       | Your Atlassian account email (used for API authentication).        |
+| `BITBUCKET_API_TOKEN`                  | Your Bitbucket API token.                                          |
 | `WORKSPACE`                             | Your Bitbucket workspace ID.                                       |
 | `REPO_SLUG`                             | Your Bitbucket repository slug.                                    |
 | `GOOGLE_DOC_ID`                         | The ID of your target Google Doc.                                  |
@@ -114,7 +116,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
           BITBUCKET_EMAIL: ${{ secrets.BITBUCKET_EMAIL }}
-          BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
+          BITBUCKET_API_TOKEN: ${{ secrets.BITBUCKET_API_TOKEN }}
           WORKSPACE: ${{ secrets.WORKSPACE }}
           REPO_SLUG: ${{ secrets.REPO_SLUG }}
           GOOGLE_DOC_ID: ${{ secrets.GOOGLE_DOC_ID }}
