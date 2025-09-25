@@ -52,7 +52,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
           BITBUCKET_EMAIL: ${{ secrets.BITBUCKET_EMAIL }}
-          BITBUCKET_APP_PASSWORD: ${{ secrets.BITBUCKET_APP_PASSWORD }}
+          BITBUCKET_API_TOKEN: ${{ secrets.BITBUCKET_API_TOKEN }}
           WORKSPACE: ${{ secrets.WORKSPACE }}
           REPO_SLUG: ${{ secrets.REPO_SLUG }}
           GOOGLE_DOC_ID: ${{ secrets.GOOGLE_DOC_ID }}
